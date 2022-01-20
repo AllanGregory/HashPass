@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using HashPass.Data;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -11,6 +12,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
+using MockHasPass.Data;
 
 namespace dotnetcore_mvc_rest_api_hash_senha
 {
@@ -27,6 +29,7 @@ namespace dotnetcore_mvc_rest_api_hash_senha
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
+            services.AddScoped<IHashPassRepo, MockHashPassRepo>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

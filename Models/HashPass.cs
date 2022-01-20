@@ -1,6 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 
-namespace HashPassModel.Models
+namespace HashPass.Models
 {
     public class HashPassModel
     {
