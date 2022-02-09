@@ -14,6 +14,8 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
 using MockHasPass.Data;
+using Newtonsoft.Json.Serialization;
+using SqlHashPass.Data;
 
 namespace dotnetcore_mvc_rest_api_hash_senha
 {
@@ -32,9 +34,13 @@ namespace dotnetcore_mvc_rest_api_hash_senha
             services.AddDbContext<HashPassContext>(opt => opt.UseSqlServer
                 (Configuration.GetConnectionString("connectionString")));
 
-            services.AddControllers();
+            services.AddControllers().AddNewtonsoftJson(s => {
+                s.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
+            });
+
+            services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
             
-            services.AddScoped<IHashPassRepo, MockHashPassRepo>();
+            services.AddScoped<IHashPassRepo, SqlHashPassRepo>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

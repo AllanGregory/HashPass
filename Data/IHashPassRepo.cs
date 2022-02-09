@@ -7,5 +7,9 @@ namespace HashPass.Data
     {
         IEnumerable<HashPassModel> GetAllHashPass();
         HashPassModel GetHashPassById(int id);
+        void CreateHashPass(HashPassModel hashPass);
+        void UpdateHashPass(HashPassModel hashPass);
+        void DeleteHashPass(HashPassModel hashPass);
+        bool SaveChanges();
     }
 }

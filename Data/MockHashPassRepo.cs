@@ -6,6 +6,16 @@ namespace MockHasPass.Data
 {
     public class MockHashPassRepo : IHashPassRepo
     {
+        public void CreateHashPass(HashPassModel hashPass)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public void DeleteHashPass(HashPassModel hashPass)
+        {
+            throw new System.NotImplementedException();
+        }
+
         public IEnumerable<HashPassModel> GetAllHashPass()
         {
             var hashPassLista = new List<HashPassModel>
@@ -45,6 +55,16 @@ namespace MockHasPass.Data
                 HashPass = "!8*@#$",
                 CreationDate = "2022-01-19 22:51:53.123"
             };
+        }
+
+        public bool SaveChanges()
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public void UpdateHashPass(HashPassModel hashPass)
+        {
+            throw new System.NotImplementedException();
         }
     }
 }
