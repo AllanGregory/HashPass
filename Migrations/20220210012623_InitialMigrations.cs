@@ -2,7 +2,7 @@
 
 namespace dotnetcore_mvc_rest_api_hash_senha.Migrations
 {
-    public partial class InitialCreate : Migration
+    public partial class InitialMigrations : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -13,8 +13,8 @@ namespace dotnetcore_mvc_rest_api_hash_senha.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     PassText = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    HashPass = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    CreationDate = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    HashPass = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    CreationDate = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     UpdatedDate = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>

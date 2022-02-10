@@ -9,8 +9,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace dotnetcore_mvc_rest_api_hash_senha.Migrations
 {
     [DbContext(typeof(HashPassContext))]
-    [Migration("20220209005530_InitialCreate")]
-    partial class InitialCreate
+    [Migration("20220210012623_InitialMigrations")]
+    partial class InitialMigrations
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -28,11 +28,9 @@ namespace dotnetcore_mvc_rest_api_hash_senha.Migrations
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("CreationDate")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("HashPass")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("PassText")

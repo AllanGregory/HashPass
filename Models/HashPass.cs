@@ -10,10 +10,8 @@ namespace HashPass.Models
         [Required]
         public string PassText { get; set; }
         
-        [Required]
         public string HashPass { get; set; }
         
-        [Required]
         public string CreationDate { get; set; }
 
         public string UpdatedDate { get; set; }
