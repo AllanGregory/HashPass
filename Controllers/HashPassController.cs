@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using AutoMapper;
@@ -49,6 +50,10 @@ namespace HashPass.Controllers
         public ActionResult<HashPassReadDto> PostCreateHashPass(HashPassCreateDto createHashPassDto)
         {
             var hashPassModel = _mapper.Map<HashPassModel>(createHashPassDto);
+
+            hashPassModel.CreationDate = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss.fff");
+            hashPassModel.HashPass = "testeHashPass"; //Aplicar a regra aqui para hash
+
             _repository.CreateHashPass(hashPassModel);
             _repository.SaveChanges();
 
@@ -64,6 +69,8 @@ namespace HashPass.Controllers
         {
             var hashPassModelFromRepo = _repository.GetHashPassById(id);
 
+            hashPassModelFromRepo.UpdatedDate = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss.fff");
+            
             if (hashPassModelFromRepo == null)
             {
                 return NotFound();
@@ -83,6 +90,8 @@ namespace HashPass.Controllers
         public ActionResult PartialUpdateHashPass(int id, JsonPatchDocument<HashPassUpdateDto> updateHasPassDto)
         {
             var hashPassModelFromRepo = _repository.GetHashPassById(id);
+
+            hashPassModelFromRepo.UpdatedDate = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss.fff");
 
             if (hashPassModelFromRepo == null)
             {
