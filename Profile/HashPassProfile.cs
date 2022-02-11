@@ -13,6 +13,7 @@ namespace HashPass.Profiles
             CreateMap<HashPassCreateDto, HashPassModel>();
             CreateMap<HashPassUpdateDto, HashPassModel>();
             CreateMap<HashPassModel, HashPassUpdateDto>();
+            CreateMap<HashPassModel, HashPassDecryptedDto>();
         }
     }
 }

@@ -139,14 +139,14 @@ namespace HashPass.Controllers
         //GET api/HashPass
         [Route("~/api/GetHashPassDecrypted")] 
         [HttpGet("{code}")]
-        public ActionResult<string> GetHashPassDecrypted([FromBody] string hashPassEncrypted)
+        public ActionResult<IEnumerable> GetHashPassDecrypted([FromBody] string hashPassEncrypted)
         {
             var hashPassItem = _repository.GetHashPassTextDecrypted(hashPassEncrypted);
             hashPassItem.PassText = hashPassBusiness.HashPassDecrypt(hashPassItem.HashPass);
 
             if (hashPassItem != null)
             {
-                return Ok("Pass text for this hash is: "+ hashPassItem.PassText);
+                return Ok(_mapper.Map<HashPassDecryptedDto>(hashPassItem));
             }
 
             return NotFound();
