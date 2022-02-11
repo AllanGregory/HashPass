@@ -45,6 +45,11 @@ namespace SqlHashPass.Data
             return _context.HashPass.FirstOrDefault(p => p.Id == id);
         }
 
+        public HashPassModel GetHashPassTextDecrypted(string hashPass)
+        {
+            return _context.HashPass.FirstOrDefault(p => p.HashPass == hashPass);
+        }
+
         public bool SaveChanges()
         {
             return (_context.SaveChanges() >= 0);

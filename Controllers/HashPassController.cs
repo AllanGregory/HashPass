@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using AutoMapper;
+using HashPass.Business;
 using HashPass.Data;
 using HashPass.Dto;
 using HashPass.Models;
@@ -16,11 +17,13 @@ namespace HashPass.Controllers
     {
         private readonly IHashPassRepo _repository;
         private readonly IMapper _mapper;
+        private HashPassBusiness hashPassBusiness;
 
         public HashPassController(IHashPassRepo repository, IMapper mapper)
         {
             _repository = repository;
             _mapper = mapper;
+            hashPassBusiness = new HashPassBusiness();
         }
 
         //GET api/HashPass
@@ -32,7 +35,7 @@ namespace HashPass.Controllers
         }
 
         //GET api/HashPass/{id}
-        [HttpGet("{id}", Name = "GetHashPassById")]
+        [HttpGet("{id:int}", Name = "GetHashPassById")]
         public ActionResult<IEnumerable> GetHashPassById(int id)
         {
             var hashPassItem = _repository.GetHashPassById(id);
@@ -52,7 +55,7 @@ namespace HashPass.Controllers
             var hashPassModel = _mapper.Map<HashPassModel>(createHashPassDto);
 
             hashPassModel.CreationDate = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss.fff");
-            hashPassModel.HashPass = "testeHashPass"; //Aplicar a regra aqui para hash
+            hashPassModel.HashPass = hashPassBusiness.HashPassEncrypt(hashPassModel.PassText);
 
             _repository.CreateHashPass(hashPassModel);
             _repository.SaveChanges();
@@ -70,6 +73,7 @@ namespace HashPass.Controllers
             var hashPassModelFromRepo = _repository.GetHashPassById(id);
 
             hashPassModelFromRepo.UpdatedDate = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss.fff");
+            hashPassModelFromRepo.HashPass = hashPassBusiness.HashPassEncrypt(hashPassModelFromRepo.PassText);
             
             if (hashPassModelFromRepo == null)
             {
@@ -92,6 +96,7 @@ namespace HashPass.Controllers
             var hashPassModelFromRepo = _repository.GetHashPassById(id);
 
             hashPassModelFromRepo.UpdatedDate = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss.fff");
+            hashPassModelFromRepo.HashPass = hashPassBusiness.HashPassEncrypt(hashPassModelFromRepo.PassText);
 
             if (hashPassModelFromRepo == null)
             {
@@ -129,6 +134,22 @@ namespace HashPass.Controllers
             _repository.SaveChanges();
 
             return NoContent();
+        }
+
+        //GET api/HashPass
+        [Route("~/api/GetHashPassDecrypted")] 
+        [HttpGet("{code}")]
+        public ActionResult<string> GetHashPassDecrypted([FromBody] string hashPassEncrypted)
+        {
+            var hashPassItem = _repository.GetHashPassTextDecrypted(hashPassEncrypted);
+            hashPassItem.PassText = hashPassBusiness.HashPassDecrypt(hashPassItem.HashPass);
+
+            if (hashPassItem != null)
+            {
+                return Ok("Pass text for this hash is: "+ hashPassItem.PassText);
+            }
+
+            return NotFound();
         }
     }
 }

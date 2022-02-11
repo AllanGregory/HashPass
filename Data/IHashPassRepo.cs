@@ -10,6 +10,7 @@ namespace HashPass.Data
         void CreateHashPass(HashPassModel hashPass);
         void UpdateHashPass(HashPassModel hashPass);
         void DeleteHashPass(HashPassModel hashPass);
+        HashPassModel GetHashPassTextDecrypted(string hashPass);
         bool SaveChanges();
     }
 }

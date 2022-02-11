@@ -57,6 +57,11 @@ namespace MockHasPass.Data
             };
         }
 
+        public HashPassModel GetHashPassTextDecrypted(string hashPass)
+        {
+            throw new System.NotImplementedException();
+        }
+
         public bool SaveChanges()
         {
             throw new System.NotImplementedException();
